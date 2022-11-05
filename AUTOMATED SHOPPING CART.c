@@ -6,7 +6,10 @@
 struct cart
 {
     struct cart *prev;
+    int price;
     int n;
+    int discount;
+    int discounted_price;
     struct cart *next;
 }*h,*temp,*temp1,*temp2,*temp4;
 void menu(); 
@@ -65,6 +68,11 @@ void calculate()
 	{
 		price=price+temp->discounted_price;
 	}
+	if(price<2000)
+	{
+		price=price-(0.05*price);
+	}
+	else if()
 	printf("PAYABLE AMOUNT is: RS %d",price);
 }
 
