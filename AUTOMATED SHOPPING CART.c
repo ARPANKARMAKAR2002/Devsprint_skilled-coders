@@ -26,7 +26,7 @@ int main()
 	while (stopping_case=1)
 	{
 		int ch;
-		printf("Enter 1 for adding an item 2 for displaying bill 3 for deleting or reducing quantity of an item 4 for payment details.\n");
+		printf("Enter 1 for adding an item 2 for displaying bill 3 for deleting or reducing quantity of an item 4 for payment details and any other number to stop billing.\n");
 		scanf("%d",&ch);
 		switch (ch)
 		{
@@ -42,8 +42,12 @@ int main()
 			case 4:
 				payment();
 				break;
+			default:
+				stopping_case=0;
+				break;
 		}
 	}
+	return 0;
 }
 
 void input()
@@ -51,6 +55,13 @@ void input()
 	x *new_node=(x*)malloc(sizeof(x));
 	printf("Enter the product code:\n");
 	scanf("%d",&new_node->product_code);
+	printf("Enter product price: \n");
+	scanf("%d",&new_node->product_price);
+	printf("Enter individual discount offered on the product: \n");
+	scanf("%d",new_node->product_discount);
+	new_node->discounted_price=new_node->product_price-((new_node->product_discount/100)*new_node->product_price);
+	printf("Enter quantity: \n");
+	scanf("%d",new_node->quantity);
 	if(start==NULL)
 	{
 		start=new_node;
@@ -129,11 +140,17 @@ int calculate()
 	int price=0;
 	x *temp=NULL;
 	for(temp=start; temp->next!=NULL; temp=temp->next)
-		price=price+temp->discounted_price;
+		price=price+(temp->discounted_price)*temp->quantity;
 	return price;
 }
 
 void payment()
 {
+	int price=calculate();
+	int disc;
+	printf("Enter additional discount offered by store: ");
+	scanf("%d",&disc);
+	price=price-((disc/100)*price);
 	
+	printf("PRICE TO BE PAID: %d",price);
 }
